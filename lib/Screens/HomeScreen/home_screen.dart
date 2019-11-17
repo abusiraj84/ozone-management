@@ -1,20 +1,23 @@
+import 'package:flutter/material.dart';
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'dart:convert';
 import 'dart:async';
-
 import 'package:http/http.dart' as http;
-import 'package:flutter/material.dart';
+
 import 'package:ozone_managment/Animation/animation.dart';
+
 import 'package:ozone_managment/Screens/CrudScreens/adddata.dart';
 import 'package:ozone_managment/Screens/CrudScreens/detail.dart';
 import 'package:ozone_managment/Screens/LoginScreen/login_screen.dart';
 import 'package:ozone_managment/Screens/MenuScreen/user_profile.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 class HomeScreen extends StatefulWidget {
- const HomeScreen({Key key,}) : super(key: key);
-
-
+  const HomeScreen({
+    Key key,
+  }) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -24,308 +27,298 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-     getName().then(_updatename);
-     getemail().then(_updateemail);
-     getuserImg().then(_updateuserImg);
-        super.initState();
-        
-    
-    
-      }
+    getName().then(_updatename);
+    getemail().then(_updateemail);
+    getuserImg().then(_updateuserImg);
+    super.initState();
+  }
 
-      //// get name /////
-       String _name= '';
-    
-      Future<String> getName() async {
-         SharedPreferences prefs = await SharedPreferences.getInstance();
-         String name = prefs.getString("name");
-     
-         return name;
-    
-    }
-        void   _updatename(String name) {
-     setState(() {
-    this._name = name;
-  });     
+  //// get  SharedPreferences NAME /////
+  String _name = '';
+
+  Future<String> getName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String name = prefs.getString("name");
+
+    return name;
+  }
+
+  void _updatename(String name) {
+    setState(() {
+      this._name = name;
+    });
   }
   ///////
 
+  //// get SharedPreferences EMAIL /////
+  String _email = '';
+  Future<String> getemail() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String email = prefs.getString("email");
 
- //// get email /////
-    String _email= '';
-    Future<String> getemail() async {
-         SharedPreferences prefs = await SharedPreferences.getInstance();
-         String email = prefs.getString("email");
-     
-         return email;
-    
-    }
-
-            void   _updateemail(String email) {
-     setState(() {
-    this._email = email;
-  });     
+    return email;
   }
 
+  void _updateemail(String email) {
+    setState(() {
+      this._email = email;
+    });
+  }
 
   //////////
 
- //// get _userImg /////
-    String _userImg= '';
+  //// get IMAGE /////
+  String _userImg = '';
 
-    Future<String> getuserImg() async {
-         SharedPreferences prefs = await SharedPreferences.getInstance();
-         String userImg = prefs.getString("userImg");
-     
-         return userImg;
-    
-    }
+  Future<String> getuserImg() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String userImg = prefs.getString("userImg");
 
-     void   _updateuserImg(String userImg) {
-     setState(() {
-    this._userImg = userImg;
-  });     
+    return userImg;
+  }
+
+  void _updateuserImg(String userImg) {
+    setState(() {
+      this._userImg = userImg;
+    });
   }
   ///////////////
-    
-      Future<List> getData() async {
-        final response = await http.get("http://192.168.1.110/api/getdata.php");
-        return json.decode(response.body);
-        
-      }
-    
-      Future<List> getvideocountData() async {
-        final response =
-            await http.get("http://192.168.1.110/api/getdatacount.php");
-        return json.decode(response.body);
-      }
-    
-      @override
-      Widget build(BuildContext context) {
-        return Scaffold(
-          drawer: Drawer(
-            child: ListView(
+
+  Future<List> getData() async {
+    final response = await http.get("http://192.168.1.110/api/getdata.php");
+    return json.decode(response.body);
+  }
+
+  Future<List> getvideocountData() async {
+    final response =
+        await http.get("http://192.168.1.110/api/getdatacount.php");
+    return json.decode(response.body);
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      drawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            SizedBox(
+              height: 30,
+            ),
+            Row(
               children: <Widget>[
-                SizedBox(
-                  height: 30,
-                ),
-                Row(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        right: 25,
-                      ),
-                      child: CircleAvatar(
-                        radius: 35,
-                        backgroundImage: NetworkImage(
-                         _userImg,
-                        ),
-                      ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    right: 25
+                  ),
+                  child: CircleAvatar(
+                    radius: 35,
+                    backgroundImage: NetworkImage(
+                      _userImg,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 15),
-                      child: Column(
-                        children: <Widget>[
-                          Text(_name,
-                              style: TextStyle(
-                                  color: Colors.blueAccent,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18)),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(_email,
-                              style: TextStyle(
-                                  color: Colors.grey[600],
-                                  fontWeight: FontWeight.w200,
-                                  fontSize: 12)),
-                        ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: Column(
+                    children: <Widget>[
+                      Text(_name,
+                          style: TextStyle(
+                              color: Colors.blueAccent,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18)),
+                      SizedBox(
+                        height: 10,
                       ),
-                    ),
-                  ],
+                      Text(_email,
+                          style: TextStyle(
+                              color: Colors.grey[600],
+                              fontWeight: FontWeight.w200,
+                              fontSize: 12)),
+                    ],
+                  ),
                 ),
-                SizedBox(
-                  height: 10,
-                ),
-                Divider(
-                  color: Colors.grey[400],
-                  indent: 20,
-                  endIndent: 20,
-                ),
-                ListTile(
-                  leading: Icon(Icons.person_outline),
-                  title: Text("بروفايلي"),
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) => UserProfle(),
-                      )),
-                ),
-                Divider(),
-                ListTile(
-                  leading: Icon(Icons.home),
-                  title: Text("الرئيسية"),
-                ),
-                Divider(),
-                ListTile(
-                  leading: Icon(Icons.view_module),
-                  title: Text("منصات"),
-                ),
-                Divider(),
-                ListTile(
-                  leading: Icon(Icons.settings),
-                  title: Text("الإعدادات"),
-                ),
-                Divider(),
-                ListTile(
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) => AddData(),
-                      )),
-                    
-                  
-                  leading: Icon(Icons.info),
-                  title: Text("مساعدة"),
-                ),
-                Divider(),
-                      ListTile(
-                  onTap: () async {
-                SharedPreferences prefs = await SharedPreferences.getInstance();
-                prefs.remove('email');
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (BuildContext ctx) => LoginScreen()));
-              },
-                  
-                  leading: Icon(Icons.exit_to_app),
-                  title: Text("تسجيل خروج"),
-                ),
-                Divider(),
               ],
             ),
+            SizedBox(
+              height: 10,
+            ),
+            Divider(
+              color: Colors.grey[400],
+              indent: 20,
+              endIndent: 20,
+            ),
+            ListTile(
+              leading: Icon(Icons.person_outline),
+              title: Text("بروفايلي"),
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (BuildContext context) => UserProfle(),
+              )),
+            ),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.home),
+              title: Text("الرئيسية"),
+            ),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.view_module),
+              title: Text("منصات"),
+            ),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text("الإعدادات"),
+            ),
+            Divider(),
+            ListTile(
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (BuildContext context) => AddData(),
+              )),
+              leading: Icon(Icons.info),
+              title: Text("مساعدة"),
+            ),
+            Divider(),
+            ListTile(
+              onTap: () async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                prefs.remove('email');
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext ctx) => LoginScreen()));
+              },
+              leading: Icon(Icons.exit_to_app),
+              title: Text("تسجيل خروج"),
+            ),
+            Divider(),
+          ],
+        ),
+      ),
+      backgroundColor: Color(0xfff6f6f6),
+      body: Stack(
+        children: <Widget>[
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: ClipPath(
+              clipper: ClippingClass(),
+              child: Container(
+                height: 150,
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.bottomRight,
+                        end: Alignment.topLeft,
+                        colors: [
+                      Color(0xff4b7ef6),
+                      Color(0xff2559e7),
+                    ])),
+              ),
+            ),
           ),
-          backgroundColor: Color(0xfff6f6f6),
-          body: Stack(
-            children: <Widget>[
-              Positioned(
-                top: 0,
-                left: 0,
-                right: 0,
-                child: ClipPath(
-                  clipper: ClippingClass(),
-                  child: Container(
-                    height: 150,
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            begin: Alignment.bottomRight,
-                            end: Alignment.topLeft,
-                            colors: [
-                          Color(0xff4b7ef6),
-                          Color(0xff2559e7),
-                        ])),
-                  ),
-                ),
-              ),
-              AppBar(
-                title: Text('إدارة آرام',
-                    style: TextStyle(fontWeight: FontWeight.w300, fontSize: 20)),
-                centerTitle: true,
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                actions: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15),
-                    child: GestureDetector(
-                      child: Row(
-                        children: <Widget>[
-                          Icon(
-                            Icons.add,
-                            color: Colors.yellow,
-                            size: 25,
-                          ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                           Icon(
-                            Icons.filter_list,
-                            color: Colors.yellow,
-                            size: 25,
-                          ),
-                        ],
-                      ),
-                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) => AddData(),
-                      )),
-                    ),
-                  )
-                ],
-              ),
-              Positioned(
-                top: 80,
-                left: (MediaQuery.of(context).size.width -
-                        MediaQuery.of(context).size.width * 0.9) /
-                    2,
-                child: Container(
-                  height: 100,
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.black26,
-                          offset: Offset(0, 2),
-                          spreadRadius: 0.5,
-                          blurRadius: 20)
-                    ],
-                  ),
-                  child: FutureBuilder<List>(
-                    future: getvideocountData(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasError) print(snapshot.error);
-    
-                      return snapshot.hasData
-                          ? CardsContRow(
-                              list: snapshot.data,
-                            )
-                          : Center(
-                              child: CircularProgressIndicator(),
-                            );
-                    },
-                  ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  height: 500,
-                  width: 500,
-                  child: Flex(
+          AppBar(
+            title: Text('إدارة آرام',
+                style: TextStyle(fontWeight: FontWeight.w300, fontSize: 20)),
+            centerTitle: true,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            actions: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(left: 15),
+                child: GestureDetector(
+                  child: Row(
                     children: <Widget>[
-                      Expanded(
-                        flex: 1,
-                        child: FutureBuilder<List>(
-                          future: getData(),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasError) print(snapshot.error);
-    
-                            return snapshot.hasData
-                                ? MyCard(
-                                    list: snapshot.data,
-                                  )
-                                : Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                          },
-                        ),
+                      Icon(
+                        Icons.add,
+                        color: Colors.yellow,
+                        size: 25,
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Icon(
+                        Icons.filter_list,
+                        color: Colors.yellow,
+                        size: 25,
                       ),
                     ],
-                    direction: Axis.vertical,
                   ),
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) => AddData(),
+                  )),
                 ),
-              ),
+              )
             ],
           ),
-        );
-      }
-    
+          Positioned(
+            top: 80,
+            left: (MediaQuery.of(context).size.width -
+                    MediaQuery.of(context).size.width * 0.9) /
+                2,
+            child: Container(
+              height: 100,
+              width: MediaQuery.of(context).size.width * 0.9,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.black26,
+                      offset: Offset(0, 2),
+                      spreadRadius: 0.5,
+                      blurRadius: 20)
+                ],
+              ),
+              child: FutureBuilder<List>(
+                future: getvideocountData(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) print(snapshot.error);
 
+                  return snapshot.hasData
+                      ? CardsContRow(
+                          list: snapshot.data,
+                        )
+                      : Center(
+                          child: CircularProgressIndicator(),
+                        );
+                },
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              height: 500,
+              width: 500,
+              child: Flex(
+                children: <Widget>[
+                  Expanded(
+                    flex: 1,
+                    child: FutureBuilder<List>(
+                      future: getData(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) print(snapshot.error);
+
+                        return snapshot.hasData
+                            ? MyCard(
+                                list: snapshot.data,
+                              )
+                            : Center(
+                                child: CircularProgressIndicator(),
+                              );
+                      },
+                    ),
+                  ),
+                ],
+                direction: Axis.vertical,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class CardsContRow extends StatelessWidget {
@@ -538,10 +531,7 @@ class MyCard extends StatelessWidget {
         );
       },
     );
-    
   }
-
-
 }
 
 class ClippingClass extends CustomClipper<Path> {

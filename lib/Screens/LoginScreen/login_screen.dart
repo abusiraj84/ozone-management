@@ -70,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final _formkey = GlobalKey<FormState>();
 
-    String _email, _password;
+    // String _email, _password;
 
     _submit() {
       if (_formkey.currentState.validate()) {
@@ -136,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   validator: (input) => !input.contains('@')
                                       ? 'من فضلك أدخل بريد صالح'
                                       : null,
-                                  onSaved: (input) => _email = input,
+                                  // onSaved: (input) => _email = input,
                                 ),
                                 TextFormField(
                                   controller: pass,
@@ -147,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   validator: (input) => input.length < 6
                                       ? 'يجب أن تكون كلمة المرور على الأقل 6 أحرف'
                                       : null,
-                                  onSaved: (input) => _password = input,
+                                  // onSaved: (input) => _password = input,
                                 ),
                                 SizedBox(
                                   height: 30,
