@@ -7,7 +7,7 @@ class MYAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return           AppBar(
-            title: Text('إدارة آرام',
+            title: Text('المدير الإداري',
                 style: TextStyle(fontWeight: FontWeight.w300, fontSize: 20)),
             centerTitle: true,
             backgroundColor: Colors.transparent,

@@ -74,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ///
         
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.12,
+            top: MediaQuery.of(context).size.height * 0.125,
             left: (MediaQuery.of(context).size.width - MediaQuery.of(context).size.width * 0.9) / 2,
             
             child: Container(
