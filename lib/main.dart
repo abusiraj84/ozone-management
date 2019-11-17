@@ -7,7 +7,8 @@ import 'Screens/LoginScreen/login_screen.dart';
 import 'Screens/LoginScreen/signup_screen.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  
+  // WidgetsFlutterBinding.ensureInitialized();
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var email = prefs.getString('email');
