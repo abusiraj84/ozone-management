@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:ozone_managment/Screens/HomeScreen/home_screen.dart';
+import 'package:ozone_managment/Screens/LoginScreen/signup_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 
 import 'package:toast/toast.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-import '../signup_screen.dart';
-import 'home_screen.dart';
+
 
 
 class LoginScreen extends StatefulWidget {
@@ -18,75 +18,66 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController user = new TextEditingController();
+  TextEditingController pass = new TextEditingController();
 
-TextEditingController user=new TextEditingController();
-TextEditingController pass=new TextEditingController();
+  String msg = '';
+  String username = '';
 
-String msg='';
-String username='';
+  Future<List> _login() async {
+    final response =
+        await http.post("http://192.168.1.110/api/login.php", body: {
+      "user_email": user.text,
+      "user_password": pass.text,
+    });
 
+    var datauser = json.decode(response.body);
 
+    if (datauser.length == 0) {
+      Toast.show("اكتب كلمة عدل يا شرمت", context,
+          duration: Toast.LENGTH_LONG,
+          gravity: Toast.CENTER,
+          backgroundColor: Colors.red);
+    } else {
+      if (datauser[0]['user_type_id'] == '1') {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString('userid', datauser[0]['user_id']);
+        prefs.setString('name', datauser[0]['user_name']);
+        prefs.setString('email', datauser[0]['user_email']);
+        prefs.setString('userImg', datauser[0]['user_image']);
+        prefs.setString('usertype', datauser[0]['user_type_id']);
 
-Future<List> _login() async {
-  final response = await http.post("http://192.168.1.110/api/login.php", body: {
-    "user_email": user.text,
-    "user_password": pass.text,
-  });
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (BuildContext ctx) => HomeScreen()));
 
-  var datauser = json.decode(response.body);
+        Toast.show("hello", context,
+            duration: Toast.LENGTH_LONG,
+            gravity: Toast.BOTTOM,
+            backgroundColor: Colors.blue);
+      } else if (datauser[0]['user_type_id'] == '1') {
+        Navigator.pushReplacementNamed(context, '/bodegaPage');
+      }
 
-
-  if(datauser.length==0){
-
-    Toast.show("اكتب كلمة عدل يا شرمت", context, duration: Toast.LENGTH_LONG, gravity:  Toast.CENTER,backgroundColor: Colors.red);
-
-  }else{
-    if(datauser[0]['user_type_id']=='1'){
-
-
-
-
-
- SharedPreferences prefs = await SharedPreferences.getInstance();
-            prefs.setString('userid', datauser[0]['user_id']);
-            prefs.setString('name', datauser[0]['user_name']);
-            prefs.setString('email', datauser[0]['user_email']);
-            prefs.setString('userImg', datauser[0]['user_image']);
-            prefs.setString('usertype', datauser[0]['user_type_id']);
-
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (BuildContext ctx) => HomeScreen()));
-                
-         Toast.show("hello", context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM,backgroundColor: Colors.blue);
-
-    }else if(datauser[0]['user_type_id']=='1'){
-      Navigator.pushReplacementNamed(context, '/bodegaPage');
+      setState(() {
+        username = datauser[0]['username'];
+      });
     }
 
-    setState(() {
-          username= datauser[0]['username'];
-        });
-
+    return datauser;
   }
-
-  return datauser;
-}
-
 
   @override
   Widget build(BuildContext context) {
-
     final _formkey = GlobalKey<FormState>();
 
     String _email, _password;
-    
+
     _submit() {
       if (_formkey.currentState.validate()) {
         _formkey.currentState.save();
-    
+
         //Login the user
         _login();
-  
       }
     }
 
@@ -138,7 +129,7 @@ Future<List> _login() async {
                                   height: 10,
                                 ),
                                 TextFormField(
-                                  controller: user,    
+                                  controller: user,
                                   decoration: InputDecoration(
                                       labelText: 'اسم المستخدم'),
                                   style: TextStyle(fontSize: 14),
@@ -148,7 +139,7 @@ Future<List> _login() async {
                                   onSaved: (input) => _email = input,
                                 ),
                                 TextFormField(
-                                  controller: pass, 
+                                  controller: pass,
                                   obscureText: true,
                                   decoration:
                                       InputDecoration(labelText: 'كلمة المرور'),
@@ -176,7 +167,7 @@ Future<List> _login() async {
                                         )
                                       ],
                                     ),
-                                    onPressed: () async  => _submit(),
+                                    onPressed: () async => _submit(),
                                   ),
                                 ),
                                 Container(

@@ -5,11 +5,11 @@ import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:ozone_managment/Animation/animation.dart';
-import 'package:ozone_managment/Screens/login_screen.dart';
-import 'package:ozone_managment/Screens/user_profile.dart';
+import 'package:ozone_managment/Screens/CrudScreens/adddata.dart';
+import 'package:ozone_managment/Screens/CrudScreens/detail.dart';
+import 'package:ozone_managment/Screens/LoginScreen/login_screen.dart';
+import 'package:ozone_managment/Screens/MenuScreen/user_profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../Detail.dart';
-import '../adddata.dart';
 
 class HomeScreen extends StatefulWidget {
  const HomeScreen({Key key,}) : super(key: key);

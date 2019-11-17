@@ -8,17 +8,17 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'Screens/home_screen.dart';
-import 'signup_screen.dart';
-import './Detail.dart';
-import './adddata.dart';
-import 'Screens/login_screen.dart';
+import 'Screens/CrudScreens/adddata.dart';
+import 'Screens/CrudScreens/detail.dart';
+import 'Screens/HomeScreen/home_screen.dart';
+import 'Screens/LoginScreen/login_screen.dart';
+import 'Screens/LoginScreen/signup_screen.dart';
 
 
 
 Future<void> main() async {
    WidgetsFlutterBinding.ensureInitialized();
-   
+
    SharedPreferences prefs = await SharedPreferences.getInstance();
   var email = prefs.getString('email');
     print(email);
