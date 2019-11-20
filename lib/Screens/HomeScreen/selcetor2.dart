@@ -24,6 +24,7 @@ class _Selector2State extends State<Selector2> {
           onTap: () {
             setState(() {
               _currentIndex = index;
+              print(index);
             });
           },
           child: Container(

@@ -1,7 +1,6 @@
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:ozone_managment/Screens/HomeScreen/home_screen2.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Screens/HomeScreen/home_screen.dart';
 import 'Screens/LoginScreen/login_screen.dart';

@@ -1,32 +1,23 @@
-import 'package:flutter/material.dart';
-import 'package:ozone_managment/Screens/MenuScreen/drawer_menu.dart';
-
-
-
 import 'dart:convert';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 
+import 'package:flutter/material.dart';
 import 'package:ozone_managment/Animation/animation.dart';
-
 import 'package:ozone_managment/Screens/CrudScreens/detail.dart';
-import 'package:ozone_managment/Screens/MenuScreen/my_app_bar.dart';
+import 'package:ozone_managment/Screens/HomeScreen/my_custum_paint.dart';
+import 'package:ozone_managment/Screens/HomeScreen/selcetor2.dart';
 
+import 'cards_count_row.dart';
 
-
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({
-    Key key,
-  }) : super(key: key);
+class HomeScreen2 extends StatefulWidget {
+  HomeScreen2({Key key}) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _HomeScreen2State createState() => _HomeScreen2State();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-
-
-
+class _HomeScreen2State extends State<HomeScreen2> {
   Future<List> getData() async {
     final response = await http.get("http://192.168.1.110/api/getdata.php");
     return json.decode(response.body);
@@ -38,200 +29,138 @@ class _HomeScreenState extends State<HomeScreen> {
     return json.decode(response.body);
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // Menu Items // هنا كلاس عناصر المنيو
-      drawer: DrawerMenu(),
-      ////
-      
-      backgroundColor: Color(0xfff6f6f6),
-      body: Stack(
-        children: <Widget>[
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: ClipPath(
-              clipper: ClippingClass(),
-              child: Container(
-                height: 150,
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.bottomRight,
-                        end: Alignment.topLeft,
-                        colors: [
-                      Color(0xff4b7ef6),
-                      Color(0xff2559e7),
-                    ])),
-              ),
-            ),
-          ),
+    return SafeArea(
+      bottom: false,
+      top: false,
+      child: Scaffold(
+        body: SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(),
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+              children: <Widget>[
+                Container(
+                    height: 210,
+                    child: Stack(
+                      children: <Widget>[
+                        MyCustomPaint(),
+                        Positioned(
+                          top: 60,
+                          left: 20,
+                          right: 20,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                Icons.menu,
+                                size: 25,
+                                color: Color(0xffffffff),
+                              ),
+                              Spacer(),
+                              Text(
+                                "المتابعة",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color(0xffffffff),
+                                ),
+                              ),
+                              Spacer(),
+                              Icon(
+                                Icons.person,
+                                size: 25,
+                                color: Color(0xffffffff),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Positioned(
+                          top: MediaQuery.of(context).size.height * 0.125,
+                          left: (MediaQuery.of(context).size.width -
+                                  MediaQuery.of(context).size.width * 0.9) /
+                              2,
+                          child: Container(
+                            height: MediaQuery.of(context).size.height * 0.1,
+                            width: MediaQuery.of(context).size.width * 0.9,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.black26,
+                                    offset: Offset(0, 2),
+                                    spreadRadius: 0.5,
+                                    blurRadius: 20)
+                              ],
+                            ),
+                            child: FutureBuilder<List>(
+                              future: getvideocountData(),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasError) print(snapshot.error);
 
-          //My AppBar // هنا كلاس الأب بار
-            MYAppBar(),
-          ///
-        
-          Positioned(
-            top: MediaQuery.of(context).size.height * 0.125,
-            left: (MediaQuery.of(context).size.width - MediaQuery.of(context).size.width * 0.9) / 2,
-            
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.1,
-              width: MediaQuery.of(context).size.width * 0.9,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.black26,
-                      offset: Offset(0, 2),
-                      spreadRadius: 0.5,
-                      blurRadius: 20)
-                ],
-              ),
-              child: FutureBuilder<List>(
-                future: getvideocountData(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) print(snapshot.error);
+                                return snapshot.hasData
+                                    ? CardsCountRow(
+                                        list: snapshot.data,
+                                      )
+                                    : Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    )),
+                Container(
+                  height: MediaQuery.of(context).size.height * .1,
+                  child: Stack(
+                    children: <Widget>[
+                      Positioned(
+                          top: 20,
+                          left: 0,
+                          right: 0,
+                          child: Container(
+                            height: 35,
+                            child: Selector2(selectors: ["الجميع","مواد مقترحة","قيد المونتاج","جاهز للنشر","تم النشر"]),
+                          )),
+                    ],
+                  ),
+                ),
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.65,
+                  child: Container(
+                    width: 500,
+                    child: Flex(
+                      children: <Widget>[
+                        Expanded(
+                          flex: 2,
+                          child: FutureBuilder<List>(
+                            future: getData(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasError) print(snapshot.error);
 
-                  return snapshot.hasData
-                      ? CardsContRow(
-                          list: snapshot.data,
-                        )
-                      : Center(
-                          child: CircularProgressIndicator(),
-                        );
-                },
-              ),
-            ),
-          ),
-          Positioned(
-            top:  MediaQuery.of(context).size.height *0.24,
-            left: 0,
-            right: 0,
-            bottom: null,
-            height:  MediaQuery.of(context).size.height,
-                      child: Container(
-             
-              width: 500,
-              child: Flex(
-                children: <Widget>[
-                  Expanded(
-                    flex: 2,
-                    child: FutureBuilder<List>(
-                      future: getData(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasError) print(snapshot.error);
-
-                        return snapshot.hasData
-                            ? MyCard(
-                                list: snapshot.data,
-                              )
-                            : Center(
-                                child: CircularProgressIndicator(),
-                              );
-                      },
+                              return snapshot.hasData
+                                  ? MyCard(
+                                      list: snapshot.data,
+                                    )
+                                  : Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                            },
+                          ),
+                        ),
+                      ],
+                      direction: Axis.vertical,
                     ),
                   ),
-                ],
-                direction: Axis.vertical,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class CardsContRow extends StatelessWidget {
-  final List list;
-  CardsContRow({this.list});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: 1,
-        itemBuilder: (context, i) {
-          return Container(
-            width: MediaQuery.of(context).size.width - 40,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(list[i]['A'],
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 18)),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Text('مواد مقترحة',
-                        style: TextStyle(
-                            color: Color(0xff2559e7),
-                            fontWeight: FontWeight.w200,
-                            fontSize: 14)),
-                  ],
-                ),
-                SizedBox(width: 15),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(list[i]['B'],
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 18)),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Text('قيد التحرير',
-                        style: TextStyle(
-                            color: Color(0xff2559e7),
-                            fontWeight: FontWeight.w200,
-                            fontSize: 14)),
-                  ],
-                ),
-                SizedBox(width: 15),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(list[i]['C'],
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 18)),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Text('قيد المونتاج',
-                        style: TextStyle(
-                            color: Color(0xff2559e7),
-                            fontWeight: FontWeight.w200,
-                            fontSize: 14)),
-                  ],
-                ),
-                SizedBox(width: 15),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(list[i]['D'],
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 18)),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Text('جاهز للنشر',
-                        style: TextStyle(
-                            color: Color(0xff2559e7),
-                            fontWeight: FontWeight.w200,
-                            fontSize: 14)),
-                  ],
-                ),
+                )
               ],
             ),
-          );
-        });
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -254,12 +183,12 @@ class MyCard extends StatelessWidget {
             1,
             Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 22, vertical: 3),
+                    const EdgeInsets.symmetric(horizontal: 22, vertical: 0),
                 child: Card(
-                  elevation: 0.1,
+                  elevation: 1,
                   child: ClipPath(
                     child: Container(
-                        height: 165,
+                        height: 200,
                         decoration: BoxDecoration(
                             border: Border(
                                 left: BorderSide(
@@ -357,22 +286,4 @@ class MyCard extends StatelessWidget {
       },
     );
   }
-}
-
-class ClippingClass extends CustomClipper<Path> {
-  @override
-  getClip(Size size) {
-    var path = Path();
-    path.lineTo(0.0, size.height - 10);
-    path.quadraticBezierTo(
-        size.width / 4, size.height, size.width / 2, size.height);
-    path.quadraticBezierTo(size.width - (size.width / 4), size.height,
-        size.width, size.height - 10);
-    path.lineTo(size.width, 0.0);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper oldClipper) => false;
 }
