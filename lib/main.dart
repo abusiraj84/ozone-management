@@ -13,7 +13,9 @@ WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var email = prefs.getString('email');
   print(email);
+  
   runApp(MaterialApp(
+    
     debugShowCheckedModeBanner: false,
     title: "المدير الاداري",
     home: email == null ? LoginScreen() : HomeScreen2(),

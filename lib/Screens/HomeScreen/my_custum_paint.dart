@@ -74,7 +74,7 @@ class CurvePainter2 extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint();
-    paint.color = Color(0xff4b7ef6);
+    paint.color = Colors.grey.shade900;
     paint.style = PaintingStyle.fill; // Change this to fill
 
     var path = Path();

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:async';
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
@@ -7,6 +8,9 @@ import 'package:ozone_managment/Animation/animation.dart';
 import 'package:ozone_managment/Screens/CrudScreens/detail.dart';
 import 'package:ozone_managment/Screens/HomeScreen/my_custum_paint.dart';
 import 'package:ozone_managment/Screens/HomeScreen/selcetor2.dart';
+import 'package:ozone_managment/Screens/LoginScreen/login_screen.dart';
+import 'package:ozone_managment/Screens/MenuScreen/ProfileScreen/profile_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'cards_count_row.dart';
 
@@ -17,7 +21,72 @@ class HomeScreen2 extends StatefulWidget {
   _HomeScreen2State createState() => _HomeScreen2State();
 }
 
-class _HomeScreen2State extends State<HomeScreen2> {
+class _HomeScreen2State extends State<HomeScreen2> with TickerProviderStateMixin {
+
+  AnimationController _scaleController;
+
+
+  void initState() {
+    getName().then(_updatename);
+    getemail().then(_updateemail);
+    getuserImg().then(_updateuserImg);
+    _scaleController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 800));
+
+    super.initState();
+  }
+
+  //// get  SharedPreferences NAME /////
+  String _name = '';
+
+  Future<String> getName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String name = prefs.getString("name");
+
+    return name;
+  }
+
+  void _updatename(String name) {
+    setState(() {
+      this._name = name;
+    });
+  }
+  ///////
+
+  //// get SharedPreferences EMAIL /////
+  String _email = '';
+  Future<String> getemail() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String email = prefs.getString("email");
+
+    return email;
+  }
+
+  void _updateemail(String email) {
+    setState(() {
+      this._email = email;
+    });
+  }
+
+  //////////
+
+  //// get IMAGE /////
+  String _userImg = '';
+
+  Future<String> getuserImg() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String userImg = prefs.getString("userImg");
+
+    return userImg;
+  }
+
+  void _updateuserImg(String userImg) {
+    setState(() {
+      this._userImg = userImg;
+    });
+  }
+  ///////////////
+
   Future<List> getData() async {
     final response = await http.get("http://192.168.1.110/api/getdata.php");
     return json.decode(response.body);
@@ -31,6 +100,7 @@ class _HomeScreen2State extends State<HomeScreen2> {
 
   @override
   Widget build(BuildContext context) {
+FlutterStatusbarcolor.setStatusBarWhiteForeground(true);    
     return SafeArea(
       bottom: false,
       top: false,
@@ -53,25 +123,49 @@ class _HomeScreen2State extends State<HomeScreen2> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              Icon(
-                                Icons.menu,
-                                size: 25,
-                                color: Color(0xffffffff),
-                              ),
-                              Spacer(),
-                              Text(
-                                "المتابعة",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: Color(0xffffffff),
+                              Container(
+                                height: 35,
+                                width: 35,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(color: Colors.white)),
+                                child: Icon(
+                                  Icons.menu,
+                                  color: Colors.white,
+                                  size: 15,
                                 ),
                               ),
-                              Spacer(),
-                              Icon(
-                                Icons.person,
-                                size: 25,
-                                color: Color(0xffffffff),
+                              Expanded(
+                                child: Text(
+                                  "WorkFollow",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: Color(0xffffffff),
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
+                              InkWell(
+                                child: Container(
+                                   decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border:
+                                              Border.all(color: Colors.white,width: 2)),
+                                  child: Hero(
+                                    tag: _email,
+                                    child: CircleAvatar(
+                                      backgroundImage: NetworkImage(
+                                        _userImg,
+                                      ),
+                                      radius: 20,
+                                    ),
+                                  ),
+                                ),
+                                onTap: () => Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            ProfileScreen())),
+                              )
                             ],
                           ),
                         ),
@@ -122,7 +216,13 @@ class _HomeScreen2State extends State<HomeScreen2> {
                           right: 0,
                           child: Container(
                             height: 35,
-                            child: Selector2(selectors: ["الجميع","مواد مقترحة","قيد المونتاج","جاهز للنشر","تم النشر"]),
+                            child: Selector2(selectors: [
+                              "الجميع",
+                              "مواد مقترحة",
+                              "قيد المونتاج",
+                              "جاهز للنشر",
+                              "تم النشر"
+                            ]),
                           )),
                     ],
                   ),
@@ -171,6 +271,7 @@ class MyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      padding: EdgeInsets.only(top: 0),
       itemCount: list == null ? 0 : list.length,
       itemBuilder: (context, i) {
         return InkWell(
@@ -182,8 +283,7 @@ class MyCard extends StatelessWidget {
           child: FadeAnimation(
             1,
             Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 22, vertical: 0),
+                padding: const EdgeInsets.only(left: 22, right: 22, bottom: 10),
                 child: Card(
                   elevation: 1,
                   child: ClipPath(
@@ -241,15 +341,17 @@ class MyCard extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                    width: double.infinity,
-                                    child: Text(
-                                      list[i]['video_name'],
-                                      style: TextStyle(),
-                                      textAlign: TextAlign.start,
-                                    )),
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                      width: double.infinity,
+                                      child: Text(
+                                        list[i]['video_name'],
+                                        style: TextStyle(),
+                                        textAlign: TextAlign.start,
+                                      )),
+                                ),
                               ),
                               Row(
                                 mainAxisAlignment:

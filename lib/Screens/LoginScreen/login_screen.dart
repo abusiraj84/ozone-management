@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ozone_managment/Screens/HomeScreen/home_screen.dart';
-import 'package:ozone_managment/Screens/HomeScreen/home_screen_old.dart';
+
 import 'package:ozone_managment/Screens/LoginScreen/signup_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -35,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
     var datauser = json.decode(response.body);
 
     if (datauser.length == 0) {
-      Toast.show("اكتب كلمة عدل يا شرمت", context,
+      Toast.show("لم تدخل كلمة مرور صحيحة", context,
           duration: Toast.LENGTH_LONG,
           gravity: Toast.CENTER,
           backgroundColor: Colors.red);
@@ -49,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
         prefs.setString('usertype', datauser[0]['user_type_id']);
 
         Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (BuildContext ctx) => HomeScreen()));
+            MaterialPageRoute(builder: (BuildContext ctx) => HomeScreen2()));
 
         Toast.show("hello", context,
             duration: Toast.LENGTH_LONG,
