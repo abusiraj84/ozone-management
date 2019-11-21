@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:ozone_managment/Screens/HomeScreen/home_screen.dart';
-import 'package:ozone_managment/Screens/HomeScreen/home_screen_old.dart';
 import 'package:toast/toast.dart';
+
+import 'package:http/http.dart' as http;
+
+
+
 
 
 
@@ -23,16 +26,39 @@ class _SignupScreenState extends State<SignupScreen> {
         print(_email);
         print(_password);
         print(_username);
+          addUser();
+            Toast.show("تم إضافة مهمة بنجاح!", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.CENTER);
+                    Navigator.pop(context);
         //Login the user
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (BuildContext context) => HomeScreen(),
-        ));
-         Toast.show(" تم الإشتراك بنجاح أهلا بك يا $_username", context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM,backgroundColor: Colors.blue);
+      
       }
     }
     
+    /////
+
+  TextEditingController controllerUserName = TextEditingController();
+  TextEditingController controllerEmail = TextEditingController();
+  TextEditingController controllerPassword = TextEditingController();
+
+  var now = new DateTime.now();
+
+  void addUser() {
+    var url = "http://192.168.1.110/api/adduser.php";
+
+    http.post(url, body: {
+      "user_name": controllerUserName.text,
+      "user_email": controllerEmail.text,
+      "user_password": controllerPassword.text,
+      "user_type_id": "1",
+      "user_image": "https://journalism.berkeley.edu/wp-content/uploads/profile-placeholder.png",
+
+     
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -61,6 +87,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     height: 10,
                   ),
                   TextFormField(
+                    controller: controllerUserName,
                     decoration: InputDecoration(labelText: 'اسم المستخدم'),
                     style: TextStyle(fontSize: 14),
                     validator: (input) =>
@@ -73,6 +100,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     height: 10,
                   ),
                   TextFormField(
+                    controller: controllerEmail,
                     decoration: InputDecoration(labelText: 'البريد الإلكتروني'),
                     style: TextStyle(fontSize: 14),
                     validator: (input) =>
@@ -80,6 +108,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     onSaved: (input) => _email = input,
                   ),
                   TextFormField(
+                    controller: controllerPassword,
                     obscureText: true,
                     decoration: InputDecoration(labelText: 'كلمة المرور'),
                     style: TextStyle(fontSize: 14),
@@ -105,7 +134,10 @@ class _SignupScreenState extends State<SignupScreen> {
                           )
                         ],
                       ),
-                      onPressed: () => _submit(),
+                      onPressed: (){
+                    
+                   
+                      _submit();}
                     ),
                   ),
                   Container(
