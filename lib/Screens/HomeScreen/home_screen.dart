@@ -118,6 +118,7 @@ class _HomeScreen2State extends State<HomeScreen2>
   @override
   Widget build(BuildContext context) {
     FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
+
     return SafeArea(
       bottom: false,
       top: false,
@@ -232,7 +233,7 @@ class _HomeScreen2State extends State<HomeScreen2>
                           left: 0,
                           right: 0,
                           child: Container(
-                              height: 35,
+                              height: 50,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: ListView(
@@ -240,90 +241,131 @@ class _HomeScreen2State extends State<HomeScreen2>
                                   children: <Widget>[
                                     Padding(
                                       padding: EdgeInsets.only(left: 10),
-                                      child: InkWell(
-                                        child: Text("الجميع"),
-                                        onTap: () {
-                                          setState(() {
-                                            vidStatID = 0;
-                                          });
-                                        },
+                                      child: Chip(
+                                        backgroundColor: vidStatID == 0
+                                            ? Colors.blue
+                                            : Colors.grey,
+                                        label: InkWell(
+                                          child: Text("الجميع"),
+                                          onTap: () {
+                                            setState(() {
+                                              vidStatID = 0;
+                                            });
+                                          },
+                                        ),
                                       ),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(left: 10),
-                                      child: InkWell(
-                                        child: Text("مقترح"),
-                                        onTap: () {
-                                          setState(() {
-                                            vidStatID = 1;
-                                          });
-                                        },
+                                      child:  Chip(
+                                        backgroundColor: vidStatID == 1
+                                            ? Colors.amber
+                                            : Colors.grey,
+                                        label:  InkWell(
+                                          child: Text("مقترح"),
+                                          onTap: () {
+                                            setState(() {
+                                              vidStatID = 1;
+                                            });
+                                          },
+                                        ),
                                       ),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(left: 10),
-                                      child: InkWell(
-                                        child: Text("قيد التحرير"),
-                                        onTap: () {
-                                          setState(() {
-                                            vidStatID = 2;
-                                          });
-                                        },
+                                      child: Chip(
+                                        backgroundColor: vidStatID == 2
+                                            ? Colors.amber
+                                            : Colors.grey,
+                                        label: InkWell(
+                                          child: Text("قيد التحرير"),
+                                          onTap: () {
+                                            setState(() {
+                                              vidStatID = 2;
+                                             
+                                            });
+                                          },
+                                        ),
                                       ),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(left: 10),
-                                      child: InkWell(
-                                        child: Text("قيد المراجعة"),
-                                        onTap: () {
-                                          setState(() {
-                                            vidStatID = 3;
-                                          });
-                                        },
+                                      child:  Chip(
+                                        backgroundColor: vidStatID == 3
+                                            ? Colors.amber
+                                            : Colors.grey,
+                                        label:  InkWell(
+                                          child: Text("قيد المراجعة"),
+                                          onTap: () {
+                                            setState(() {
+                                              vidStatID = 3;
+                                            });
+                                          },
+                                        ),
                                       ),
                                     ),
                                     Padding(
-                                      padding:  EdgeInsets.only(left: 10),
-                                      child: InkWell(
-                                        child: Text("جاهز للمونتاج"),
-                                        onTap: () {
-                                          setState(() {
-                                            vidStatID = 4;
-                                          });
-                                        },
+                                      padding: EdgeInsets.only(left: 10),
+                                      child:  Chip(
+                                        backgroundColor: vidStatID == 4
+                                            ? Colors.amber
+                                            : Colors.grey,
+                                        label:  InkWell(
+                                          child: Text("جاهز للمونتاج"),
+                                          onTap: () {
+                                            setState(() {
+                                              vidStatID = 4;
+                                            });
+                                          },
+                                        ),
                                       ),
                                     ),
                                     Padding(
-                                      padding:  EdgeInsets.only(left: 10),
-                                      child: InkWell(
-                                        child: Text("قيد المونتاج"),
-                                        onTap: () {
-                                          setState(() {
-                                            vidStatID = 5;
-                                          });
-                                        },
+                                      padding: EdgeInsets.only(left: 10),
+                                      child:  Chip(
+                                        backgroundColor: vidStatID == 5
+                                            ? Colors.amber
+                                            : Colors.grey,
+                                        label:  InkWell(
+                                          child: Text("قيد المونتاج"),
+                                          onTap: () {
+                                            setState(() {
+                                              vidStatID = 5;
+                                            });
+                                          },
+                                        ),
                                       ),
                                     ),
                                     Padding(
-                                      padding:  EdgeInsets.only(left: 10),
-                                      child: InkWell(
-                                        child: Text("جاهز للنشر"),
-                                        onTap: () {
-                                          setState(() {
-                                            vidStatID = 6;
-                                          });
-                                        },
+                                      padding: EdgeInsets.only(left: 10),
+                                      child: Chip(
+                                        backgroundColor: vidStatID == 6
+                                            ? Colors.amber
+                                            : Colors.grey,
+                                        label:  InkWell(
+                                          child: Text("جاهز للنشر"),
+                                          onTap: () {
+                                            setState(() {
+                                              vidStatID = 6;
+                                            });
+                                          },
+                                        ),
                                       ),
                                     ),
                                     Padding(
-                                      padding:  EdgeInsets.only(left: 10),
-                                      child: InkWell(
-                                        child: Text("تم النشر"),
-                                        onTap: () {
-                                          setState(() {
-                                            vidStatID = 7;
-                                          });
-                                        },
+                                      padding: EdgeInsets.only(left: 10),
+                                      child:  Chip(
+                                        backgroundColor: vidStatID ==7
+                                            ? Colors.amber
+                                            : Colors.grey,
+                                        label:  InkWell(
+                                          child: Text("تم النشر"),
+                                          onTap: () {
+                                            setState(() {
+                                              vidStatID = 7;
+                                            });
+                                          },
+                                        ),
                                       ),
                                     ),
                                   ],
