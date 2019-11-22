@@ -21,10 +21,11 @@ class HomeScreen2 extends StatefulWidget {
   _HomeScreen2State createState() => _HomeScreen2State();
 }
 
-class _HomeScreen2State extends State<HomeScreen2> with TickerProviderStateMixin {
-
+class _HomeScreen2State extends State<HomeScreen2>
+    with TickerProviderStateMixin {
   AnimationController _scaleController;
 
+  int vidStatID = 0;
 
   void initState() {
     getName().then(_updatename);
@@ -92,15 +93,31 @@ class _HomeScreen2State extends State<HomeScreen2> with TickerProviderStateMixin
     return json.decode(response.body);
   }
 
+  Future<List> getDataViaID(int id) async {
+    final response = await http.get(
+        "http://192.168.1.110/api/getdataviaid.php?video_status=" +
+            id.toString());
+
+    return json.decode(response.body);
+  }
+
   Future<List> getvideocountData() async {
     final response =
         await http.get("http://192.168.1.110/api/getdatacount.php");
     return json.decode(response.body);
   }
 
+  getVideoStatus(int vidStatusId) {
+    if (vidStatusId != 0) {
+      return getDataViaID(vidStatusId);
+    } else {
+      return getData();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-FlutterStatusbarcolor.setStatusBarWhiteForeground(true);    
+    FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
     return SafeArea(
       bottom: false,
       top: false,
@@ -147,10 +164,10 @@ FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
                               ),
                               InkWell(
                                 child: Container(
-                                   decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          border:
-                                              Border.all(color: Colors.white,width: 2)),
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                          color: Colors.white, width: 2)),
                                   child: Hero(
                                     tag: _email,
                                     child: CircleAvatar(
@@ -170,7 +187,7 @@ FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
                           ),
                         ),
                         Positioned(
-                          top: MediaQuery.of(context).size.height/6,
+                          top: MediaQuery.of(context).size.height / 6,
                           left: (MediaQuery.of(context).size.width -
                                   MediaQuery.of(context).size.width * 0.9) /
                               2,
@@ -215,20 +232,108 @@ FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
                           left: 0,
                           right: 0,
                           child: Container(
-                            height: 35,
-                            child: Selector2(selectors: [
-                              "الجميع",
-                              "مواد مقترحة",
-                              "قيد المونتاج",
-                              "جاهز للنشر",
-                              "تم النشر"
-                            ]),
-                          )),
+                              height: 35,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ListView(
+                                  scrollDirection: Axis.horizontal,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 10),
+                                      child: InkWell(
+                                        child: Text("الجميع"),
+                                        onTap: () {
+                                          setState(() {
+                                            vidStatID = 0;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 10),
+                                      child: InkWell(
+                                        child: Text("مقترح"),
+                                        onTap: () {
+                                          setState(() {
+                                            vidStatID = 1;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 10),
+                                      child: InkWell(
+                                        child: Text("قيد التحرير"),
+                                        onTap: () {
+                                          setState(() {
+                                            vidStatID = 2;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 10),
+                                      child: InkWell(
+                                        child: Text("قيد المراجعة"),
+                                        onTap: () {
+                                          setState(() {
+                                            vidStatID = 3;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:  EdgeInsets.only(left: 10),
+                                      child: InkWell(
+                                        child: Text("جاهز للمونتاج"),
+                                        onTap: () {
+                                          setState(() {
+                                            vidStatID = 4;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:  EdgeInsets.only(left: 10),
+                                      child: InkWell(
+                                        child: Text("قيد المونتاج"),
+                                        onTap: () {
+                                          setState(() {
+                                            vidStatID = 5;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:  EdgeInsets.only(left: 10),
+                                      child: InkWell(
+                                        child: Text("جاهز للنشر"),
+                                        onTap: () {
+                                          setState(() {
+                                            vidStatID = 6;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:  EdgeInsets.only(left: 10),
+                                      child: InkWell(
+                                        child: Text("تم النشر"),
+                                        onTap: () {
+                                          setState(() {
+                                            vidStatID = 7;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ))),
                     ],
                   ),
                 ),
                 Container(
-                  height: MediaQuery.of(context).size.height /1.7,
+                  height: MediaQuery.of(context).size.height / 1.7,
                   child: Container(
                     width: 500,
                     child: Flex(
@@ -236,7 +341,7 @@ FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
                         Expanded(
                           flex: 2,
                           child: FutureBuilder<List>(
-                            future: getData(),
+                            future: getVideoStatus(vidStatID),
                             builder: (context, snapshot) {
                               if (snapshot.hasError) print(snapshot.error);
 

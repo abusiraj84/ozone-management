@@ -40,7 +40,7 @@ class _DetailState extends State<Detail> {
                 duration: Toast.LENGTH_SHORT, gravity: Toast.CENTER);
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (BuildContext context) => HomeScreen(),
+                builder: (BuildContext context) => HomeScreen2(),
               ),
             );
           },
