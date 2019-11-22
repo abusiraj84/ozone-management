@@ -9,7 +9,7 @@ import 'package:ozone_managment/Screens/CrudScreens/detail.dart';
 import 'package:ozone_managment/Screens/HomeScreen/my_custum_paint.dart';
 import 'package:ozone_managment/Screens/HomeScreen/selcetor2.dart';
 import 'package:ozone_managment/Screens/LoginScreen/login_screen.dart';
-import 'package:ozone_managment/Screens/MenuScreen/ProfileScreen/profile_screen.dart';
+import 'package:ozone_managment/Screens/ProfileScreen/profile_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'cards_count_row.dart';
@@ -170,7 +170,7 @@ FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
                           ),
                         ),
                         Positioned(
-                          top: MediaQuery.of(context).size.height * 0.125,
+                          top: MediaQuery.of(context).size.height/6,
                           left: (MediaQuery.of(context).size.width -
                                   MediaQuery.of(context).size.width * 0.9) /
                               2,
@@ -228,7 +228,7 @@ FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
                   ),
                 ),
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.65,
+                  height: MediaQuery.of(context).size.height /1.7,
                   child: Container(
                     width: 500,
                     child: Flex(
