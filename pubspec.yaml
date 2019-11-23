@@ -34,6 +34,9 @@ dependencies:
   toast: ^0.1.5
   shared_preferences: ^0.5.4+5
   flutter_statusbarcolor: ^0.2.3
+  image_picker:
+  path_provider:
+  image: "^2.0.4"
 
   
 

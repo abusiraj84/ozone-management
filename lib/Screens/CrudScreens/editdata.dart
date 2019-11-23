@@ -216,7 +216,7 @@ print(widget.list[widget.index]['domain_id']);
                      Toast.show("تم تعديل المهمة بنجاح!", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.CENTER);
                     Navigator.of(context).push(
                        MaterialPageRoute(
-                        builder: (BuildContext context)=>HomeScreen(),
+                        builder: (BuildContext context)=>HomeScreen2(),
                       )
                     );
                   },

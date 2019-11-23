@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:ozone_managment/Animation/animation.dart';
 import 'package:ozone_managment/Screens/ProfileScreen/profile_screen.dart';
+import 'package:ozone_managment/Screens/ProfileScreen/test_img.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 
@@ -28,7 +29,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
     super.initState();
 
-   print('sdsdsd');
+
   }
 
   TextEditingController controllerusername;
@@ -106,6 +107,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   //// get IMAGE /////
   String _userImg = '';
+  String _imgUrlData ='';
 
   Future<String> getuserImg() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -117,6 +119,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   void _updateuserImg(String userImg) {
     setState(() {
       this._userImg = userImg;
+      this._imgUrlData = 'http://192.168.1.110/api/images/' +userImg;
+      print(_imgUrlData);
     });
   }
   ///////////////
@@ -179,7 +183,7 @@ void updateUser() {
                               decoration: BoxDecoration(
                                   image: DecorationImage(
                                 image: NetworkImage(
-                                  _userImg,
+                                  _imgUrlData,
                                 ),
                                 fit: BoxFit.cover,
                               )),
@@ -268,7 +272,7 @@ void updateUser() {
                               child: Hero(
                                 tag: _email,
                                 child: CircleAvatar(
-                                  backgroundImage: NetworkImage(_userImg),
+                                  backgroundImage: NetworkImage(_imgUrlData),
                                   radius: 70,
                                 ),
                               ),
@@ -352,6 +356,20 @@ void updateUser() {
                      Toast.show("عليك تسجيل الدخول بالبيانات المحدثة", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.CENTER);
 
                             
+                  },
+                  
+              
+                  child: Text('حفظ التعديلات',style: TextStyle(color: Colors.white),),
+                  color: Colors.green,
+                ),
+
+                           FlatButton(
+                  onPressed: ()  {
+                   
+                            Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) => UploadImageDemo(
+
+                  )));
                   },
                   
               
