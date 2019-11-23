@@ -59,6 +59,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   //// get IMAGE /////
   String _userImg = '';
+  String _imgUrlData ='';
 
   Future<String> getuserImg() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -70,9 +71,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void _updateuserImg(String userImg) {
     setState(() {
       this._userImg = userImg;
+      this._imgUrlData = 'http://192.168.1.110/api/images/' +userImg;
+      print(_imgUrlData);
     });
   }
   ///////////////
+
 
   Future<List> getData() async {
     final response = await http.get("http://192.168.1.110/api/getdata.php");
@@ -120,7 +124,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               decoration: BoxDecoration(
                                   image: DecorationImage(
                                 image: NetworkImage(
-                                  _userImg,
+                                  _imgUrlData,
                                 ),
                                 fit: BoxFit.cover,
                               )),
@@ -209,7 +213,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               child: Hero(
                                 tag: _email,
                                 child: CircleAvatar(
-                                  backgroundImage: NetworkImage(_userImg),
+                                  backgroundImage: NetworkImage(_imgUrlData),
                                   radius: 70,
                                 ),
                               ),

@@ -163,8 +163,8 @@ void updateUser() {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: NetworkImage( 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTDh6FxmYhUI0Fnem-zHXIW8dQzmCTZA7qvjkZvJRUGBPuiPiUm') ,
-                         colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
-                         fit: BoxFit.fill
+                         colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.1), BlendMode.dstATop),
+                         fit: BoxFit.cover
                     )
                   ),
                 ),
@@ -313,6 +313,19 @@ void updateUser() {
                   ],
                 ),
                 Divider(),
+                               FlatButton(
+                  onPressed: ()  {
+                   
+                            Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) => UploadImageDemo(
+
+                  )));
+                  },
+                  
+              
+                  child: Text('تغيير الصورة',style: TextStyle(color: Colors.white),),
+                  color: Colors.purple,
+                ),
                 SizedBox(
                   height: 20,
                 ),
@@ -363,19 +376,7 @@ void updateUser() {
                   color: Colors.green,
                 ),
 
-                           FlatButton(
-                  onPressed: ()  {
-                   
-                            Navigator.of(context).push(MaterialPageRoute(
-              builder: (BuildContext context) => UploadImageDemo(
-
-                  )));
-                  },
-                  
-              
-                  child: Text('حفظ التعديلات',style: TextStyle(color: Colors.white),),
-                  color: Colors.green,
-                ),
+            
 
               ],
             ),

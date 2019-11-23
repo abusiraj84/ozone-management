@@ -3,7 +3,9 @@ import 'dart:io';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:ozone_managment/Screens/LoginScreen/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:toast/toast.dart';
  
 class UploadImageDemo extends StatefulWidget {
   UploadImageDemo() : super();
@@ -63,7 +65,7 @@ class UploadImageDemoState extends State<UploadImageDemo> {
     http.post(uploadEndPoint, body: {
       "image": base64Image,
       "name": fileName,
-    }).then((result) {
+    }).then((result) async {
       setStatus(result.statusCode == 200 ? result.body : errMessage);
           var url="http://192.168.1.110/api/updateimage.php";
     http.post(url,body: {
@@ -72,6 +74,9 @@ class UploadImageDemoState extends State<UploadImageDemo> {
     
      
     });
+
+    
+    
     }).catchError((error) {
       setStatus(error);
     });
@@ -166,6 +171,26 @@ class UploadImageDemoState extends State<UploadImageDemo> {
             SizedBox(
               height: 20.0,
             ),
+             FlatButton(
+                  onPressed: () async {
+                     Toast.show("تم تعديل الملف بنجاح!", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.CENTER);
+                   
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    prefs.remove('email');
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext ctx) => LoginScreen()));
+                     Toast.show("عليك تسجيل الدخول بالبيانات المحدثة", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.CENTER);
+
+                            
+                  },
+                  
+              
+                  child: Text('حفظ التعديلات',style: TextStyle(color: Colors.white),),
+                  color: Colors.green,
+                ),
           ],
         ),
       ),

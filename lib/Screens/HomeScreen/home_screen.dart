@@ -73,6 +73,7 @@ class _HomeScreen2State extends State<HomeScreen2>
 
   //// get IMAGE /////
   String _userImg = '';
+  String _imgUrlData ='';
 
   Future<String> getuserImg() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -84,6 +85,8 @@ class _HomeScreen2State extends State<HomeScreen2>
   void _updateuserImg(String userImg) {
     setState(() {
       this._userImg = userImg;
+      this._imgUrlData = 'http://192.168.1.110/api/images/' +userImg;
+      print(_imgUrlData);
     });
   }
   ///////////////
@@ -173,7 +176,7 @@ class _HomeScreen2State extends State<HomeScreen2>
                                     tag: _email,
                                     child: CircleAvatar(
                                       backgroundImage: NetworkImage(
-                                        _userImg,
+                                        _imgUrlData,
                                       ),
                                       radius: 20,
                                     ),
@@ -244,9 +247,9 @@ class _HomeScreen2State extends State<HomeScreen2>
                                       child: Chip(
                                         backgroundColor: vidStatID == 0
                                             ? Colors.blue
-                                            : Colors.grey,
+                                            : Colors.grey.shade200,
                                         label: InkWell(
-                                          child: Text("الجميع"),
+                                          child: Text("الجميع",style: TextStyle(color: vidStatID == 0 ?Colors.white:Colors.black),),
                                           onTap: () {
                                             setState(() {
                                               vidStatID = 0;
@@ -259,10 +262,10 @@ class _HomeScreen2State extends State<HomeScreen2>
                                       padding: EdgeInsets.only(left: 10),
                                       child:  Chip(
                                         backgroundColor: vidStatID == 1
-                                            ? Colors.amber
-                                            : Colors.grey,
+                                            ? Color(0xff4b6584)
+                                            : Colors.grey.shade200,
                                         label:  InkWell(
-                                          child: Text("مقترح"),
+                                          child: Text("مقترح",style: TextStyle(color: vidStatID == 1 ?Colors.white:Colors.black),),
                                           onTap: () {
                                             setState(() {
                                               vidStatID = 1;
@@ -275,10 +278,10 @@ class _HomeScreen2State extends State<HomeScreen2>
                                       padding: EdgeInsets.only(left: 10),
                                       child: Chip(
                                         backgroundColor: vidStatID == 2
-                                            ? Colors.amber
-                                            : Colors.grey,
+                                            ? Color(0xfffa8231)
+                                            : Colors.grey.shade200,
                                         label: InkWell(
-                                          child: Text("قيد التحرير"),
+                                          child: Text("قيد التحرير",style: TextStyle(color: vidStatID == 2 ?Colors.white:Colors.black),),
                                           onTap: () {
                                             setState(() {
                                               vidStatID = 2;
@@ -292,10 +295,10 @@ class _HomeScreen2State extends State<HomeScreen2>
                                       padding: EdgeInsets.only(left: 10),
                                       child:  Chip(
                                         backgroundColor: vidStatID == 3
-                                            ? Colors.amber
-                                            : Colors.grey,
+                                            ? Color(0xffa55eea)
+                                            : Colors.grey.shade200,
                                         label:  InkWell(
-                                          child: Text("قيد المراجعة"),
+                                          child: Text("قيد المراجعة",style: TextStyle(color: vidStatID == 3 ?Colors.white:Colors.black),),
                                           onTap: () {
                                             setState(() {
                                               vidStatID = 3;
@@ -308,10 +311,10 @@ class _HomeScreen2State extends State<HomeScreen2>
                                       padding: EdgeInsets.only(left: 10),
                                       child:  Chip(
                                         backgroundColor: vidStatID == 4
-                                            ? Colors.amber
-                                            : Colors.grey,
+                                            ? Color(0xff45aaf2)
+                                            : Colors.grey.shade200,
                                         label:  InkWell(
-                                          child: Text("جاهز للمونتاج"),
+                                          child: Text("جاهز للمونتاج",style: TextStyle(color: vidStatID == 4 ?Colors.white:Colors.black),),
                                           onTap: () {
                                             setState(() {
                                               vidStatID = 4;
@@ -324,10 +327,10 @@ class _HomeScreen2State extends State<HomeScreen2>
                                       padding: EdgeInsets.only(left: 10),
                                       child:  Chip(
                                         backgroundColor: vidStatID == 5
-                                            ? Colors.amber
-                                            : Colors.grey,
+                                            ? Color(0xfffed330)
+                                            : Colors.grey.shade200,
                                         label:  InkWell(
-                                          child: Text("قيد المونتاج"),
+                                          child: Text("قيد المونتاج",style: TextStyle(color: vidStatID == 5 ?Colors.white:Colors.black),),
                                           onTap: () {
                                             setState(() {
                                               vidStatID = 5;
@@ -340,10 +343,10 @@ class _HomeScreen2State extends State<HomeScreen2>
                                       padding: EdgeInsets.only(left: 10),
                                       child: Chip(
                                         backgroundColor: vidStatID == 6
-                                            ? Colors.amber
-                                            : Colors.grey,
+                                            ? Color(0xffeb3b5a)
+                                            : Colors.grey.shade200,
                                         label:  InkWell(
-                                          child: Text("جاهز للنشر"),
+                                          child: Text("جاهز للنشر",style: TextStyle(color: vidStatID == 6 ?Colors.white:Colors.black),),
                                           onTap: () {
                                             setState(() {
                                               vidStatID = 6;
@@ -356,10 +359,10 @@ class _HomeScreen2State extends State<HomeScreen2>
                                       padding: EdgeInsets.only(left: 10),
                                       child:  Chip(
                                         backgroundColor: vidStatID ==7
-                                            ? Colors.amber
-                                            : Colors.grey,
+                                            ? Color(0xff20bf6b)
+                                            : Colors.grey.shade200,
                                         label:  InkWell(
-                                          child: Text("تم النشر"),
+                                          child: Text("تم النشر",style: TextStyle(color: vidStatID == 7 ?Colors.white:Colors.black),),
                                           onTap: () {
                                             setState(() {
                                               vidStatID = 7;
