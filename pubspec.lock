@@ -108,19 +108,12 @@ packages:
     source: hosted
     version: "3.1.3"
   image:
-<<<<<<< HEAD
-    dependency: transitive
-=======
     dependency: "direct main"
->>>>>>> 9f1c785d388fdaadc87af4af43c9792c15d23704
     description:
       name: image
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
     version: "2.1.4"
-=======
-    version: "2.1.9"
   image_picker:
     dependency: "direct main"
     description:
@@ -128,7 +121,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.2+1"
->>>>>>> 9f1c785d388fdaadc87af4af43c9792c15d23704
   intl:
     dependency: transitive
     description:
@@ -178,8 +170,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.0"
-<<<<<<< HEAD
-=======
   platform:
     dependency: transitive
     description:
@@ -187,7 +177,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.1"
->>>>>>> 9f1c785d388fdaadc87af4af43c9792c15d23704
   quiver:
     dependency: transitive
     description:

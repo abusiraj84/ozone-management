@@ -135,7 +135,7 @@ class _HomeScreen2State extends State<HomeScreen2>
                       children: <Widget>[
                         MyCustomPaint(),
                         Positioned(
-                          top: 60,
+                          top: 50,
                           left: 20,
                           right: 20,
                           child: Row(
@@ -188,7 +188,7 @@ class _HomeScreen2State extends State<HomeScreen2>
                           ),
                         ),
                         Positioned(
-                          top: MediaQuery.of(context).size.height / 6,
+                          top: MediaQuery.of(context).size.height / 7.6,
                           left: (MediaQuery.of(context).size.width -
                                   MediaQuery.of(context).size.width * 0.9) /
                               2,
