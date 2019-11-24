@@ -86,7 +86,8 @@ class _AddDataState extends State<AddData> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("أضف المهمة"),
+        title: Text("إضافة مهمة"),
+        backgroundColor: Colors.black87,
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),

@@ -134,7 +134,8 @@ class UploadImageDemoState extends State<UploadImageDemo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Upload Image Demo"),
+        title: Text("تغيير صورة الملف الشخصي"),
+        backgroundColor: Colors.black87,
       ),
       body: Container(
         padding: EdgeInsets.all(30.0),
@@ -143,7 +144,7 @@ class UploadImageDemoState extends State<UploadImageDemo> {
           children: <Widget>[
             OutlineButton(
               onPressed: chooseImage,
-              child: Text('Choose Image'),
+              child: Text('اختر الصورة'),
             ),
             SizedBox(
               height: 20.0,
@@ -154,7 +155,7 @@ class UploadImageDemoState extends State<UploadImageDemo> {
             ),
             OutlineButton(
               onPressed: startUpload,
-              child: Text('Upload Image'),
+              child: Text('ارفع الصورة'),
             ),
             SizedBox(
               height: 20.0,
