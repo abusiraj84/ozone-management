@@ -8,6 +8,7 @@ import 'package:ozone_managment/Animation/animation.dart';
 import 'package:ozone_managment/Screens/CrudScreens/adddata.dart';
 import 'package:ozone_managment/Screens/CrudScreens/detail.dart';
 import 'package:ozone_managment/Screens/HomeScreen/my_custum_paint.dart';
+import 'package:ozone_managment/Screens/Members/members_screen.dart';
 import 'package:ozone_managment/Screens/ProfileScreen/profile_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -156,9 +157,33 @@ class _HomeScreen2State extends State<HomeScreen2>
                                     size: 25,
                                   ),
                                 ),
+                                
                                 onTap: (){
                                   Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
                                   return AddData();
+                                  }));
+                                },
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                                    InkWell(
+                                                              child: Container(
+                                  height: 35,
+                                  width: 35,
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(color: Colors.white)),
+                                  child: Icon(
+                                    Icons.people,
+                                    color: Colors.white,
+                                    size: 25,
+                                  ),
+                                ),
+                                
+                                onTap: (){
+                                  Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                                  return MembersScreen();
                                   }));
                                 },
                               ),
